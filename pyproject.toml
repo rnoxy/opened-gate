@@ -11,6 +11,8 @@ dependencies = [ # main dependencies (for pip)
     "numpy >= 1.20.0",
     "torch >= 2.0.0",
     "torchvision >= 0.16.0",
+    "omegaconf",
+    "lightning",
 ]
 
 [project.optional-dependencies] # optional dependency groups (for pip)
