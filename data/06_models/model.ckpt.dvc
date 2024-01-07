@@ -1,5 +1,5 @@
 outs:
-- md5: 39decd93677a071f0207291351f929a9
+- md5: 71be7dc4390d962ae4258ac072ba4530
   size: 134278024
   hash: md5
   path: model.ckpt
