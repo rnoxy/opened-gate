@@ -1,0 +1,3 @@
+latest.jpg
+images/*.jpg
+/model.onnx
