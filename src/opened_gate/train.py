@@ -145,12 +145,15 @@ def main():
     # Train the model
     trainer.fit(model, data)
 
+    # Validate the model
+    trainer.validate(model, data)
+
     # Test the model
     trainer.test(model, data)
 
     # Save the model
-    trainer.save_checkpoint("data/06_models/model.ckpt")
-    trainer.save_checkpoint("s3://opened-gate/models/model.ckpt")
+    # trainer.save_checkpoint("data/06_models/model.ckpt")
+    # trainer.save_checkpoint("s3://opened-gate/models/model.ckpt")
 
 
 if __name__ == "__main__":
