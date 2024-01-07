@@ -1,2 +1,7 @@
+[core]
+    remote = s3
+    autostage = true
+
 ['remote "s3"']
-    url = s3://opened-gate
+    url = s3://opened-gate/dvc-data
+    region = us-east-1
