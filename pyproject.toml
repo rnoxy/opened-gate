@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "opened-gate"
+version = "0.0.1"
+
+dependencies = [ # main dependencies (for pip)
+    "importlib-metadata >= 6.0.0",
+    "numpy >= 1.20.0",
+    "torch >= 2.0.0",
+    "torchvision >= 0.16.0",
+    "omegaconf",
+    "lightning",
+    "boto3 >= 1.30.0",
+    "s3fs >= 2023.12.0",
+]
+
+[project.optional-dependencies] # optional dependency groups (for pip)
+dev = ["black", "flake8", "isort", "pre-commit", "pytest", "pytest-cov", "icecream"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["src/tests"]
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+addopts = """
+--cov-report term-missing \
+--cov src/yolonas -ra"""
+
+[tool.coverage.report]
+fail_under = 0
+show_missing = true
+exclude_lines = ["pragma: no cover", "raise NotImplementedError"]
