@@ -6,7 +6,6 @@ import numpy as np
 import onnxruntime
 from PIL import Image
 from flask import Flask, jsonify
-from torchvision import transforms
 
 # Load the model (using lightning)
 MODEL_PATH = "model.onnx"
@@ -14,6 +13,8 @@ ort_session = onnxruntime.InferenceSession(MODEL_PATH)
 
 # Create the Flask app
 app = Flask(__name__)
+
+using_torch = False
 
 
 @app.route("/")
@@ -35,22 +36,24 @@ def predict():
     # Load the image
     image_raw = Image.open("latest.jpg")
 
-    # Preprocess the image
-    transform = transforms.Compose(
-        [
-            transforms.Resize((224, 224)),
-            transforms.ToTensor(),
-            transforms.Normalize(
-                mean=[0.485, 0.456, 0.406],  # RGB
-                std=[0.229, 0.224, 0.225],  # RGB
-            ),
-        ]
-    )
-    image = transform(image_raw)
-    image = image.unsqueeze(0)
+    # Convert to numpy array
+    image = image_raw.resize((224, 224))
+    image = np.array(image)
+
+    # Normalize the image
+    # transforms.Normalize(
+    #     #             mean=[0.485, 0.456, 0.406],  # RGB
+    #     #             std=[0.229, 0.224, 0.225],  # RGB
+    #     #         ),
+    image = image / 255.0
+    image = image - np.array([0.485, 0.456, 0.406])
+    image = image / np.array([0.229, 0.224, 0.225])
+    image = image.transpose(2, 0, 1)
+    image = np.expand_dims(image, axis=0)
+    image = image.astype(np.float32)
 
     # Make the prediction
-    ort_inputs = {ort_session.get_inputs()[0].name: image.numpy()}
+    ort_inputs = {ort_session.get_inputs()[0].name: image}
     ort_outs = ort_session.run(None, ort_inputs)
     predictions = ort_outs[0]
     prediction = predictions[0]
@@ -73,6 +76,7 @@ def predict():
         {
             "prediction": prediction_class.tolist(),
             "probability": softmax[prediction_class].tolist(),
+            "all_probabilities": softmax.tolist(),
         }
     )
 
