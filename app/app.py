@@ -14,8 +14,6 @@ ort_session = onnxruntime.InferenceSession(MODEL_PATH)
 # Create the Flask app
 app = Flask(__name__)
 
-using_torch = False
-
 
 @app.route("/")
 def hello():
