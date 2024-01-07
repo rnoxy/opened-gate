@@ -1,6 +1,7 @@
 # This is very simple Flask app that serves a model loaded from data/06_models/model.ckpt
 # The model is a very simple Neural Network that takes the image input and outputs the prediction
 import datetime
+import os
 
 import numpy as np
 import onnxruntime
@@ -80,4 +81,7 @@ def predict():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(
+        host=os.getenv("OPENEDGATE_HOST", "127.0.0.1"),
+        port=int(os.getenv("OPENEDGATE_PORT", 5000)),
+    )
