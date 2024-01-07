@@ -1,0 +1,6 @@
+outs:
+- md5: 4f2ee6b077348a3f8b83da15eeb32a38.dir
+  size: 9801997
+  nfiles: 27
+  hash: md5
+  path: camera-images

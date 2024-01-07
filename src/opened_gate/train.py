@@ -128,9 +128,10 @@ class ClassificationModule(lightning.LightningModule):
 
 
 def main():
+    lightning.seed_everything(1410)
 
     # Create data module
-    data = ImagesDataModule(data_dir="data/01_raw/camera-images", batch_size=2)
+    data = ImagesDataModule(data_dir="data/01_raw/camera-images", batch_size=16)
 
     # Create model
     model = ClassificationModule(
@@ -140,17 +141,37 @@ def main():
     )
 
     # Create trainer
-    trainer = lightning.Trainer(max_epochs=10)
+    trainer = lightning.Trainer(max_epochs=10, deterministic=True)
 
     # Train the model
     trainer.fit(model, data)
+
+    # Validate the model
+    trainer.validate(model, data)
 
     # Test the model
     trainer.test(model, data)
 
     # Save the model
     trainer.save_checkpoint("data/06_models/model.ckpt")
-    trainer.save_checkpoint("s3://opened-gate/models/model.ckpt")
+    # trainer.save_checkpoint("s3://opened-gate/models/model.ckpt")
+
+    # Convert to ONNX
+    input_sample = torch.randn(1, 3, 224, 224)
+    torch.onnx.export(
+        model,
+        input_sample,
+        "app/model.onnx",
+        export_params=True,
+        opset_version=11,
+        do_constant_folding=True,
+        input_names=["input"],
+        output_names=["output"],
+        dynamic_axes={
+            "input": {0: "batch_size"},
+            "output": {0: "batch_size"},
+        },
+    )
 
 
 if __name__ == "__main__":
