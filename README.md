@@ -1,7 +1,6 @@
 # opened-gate
 Simple CV project to check if the gate (visible from camera) is opened
-<img width="50%" alt="image" src="https://github.com/rnoxy/opened-gate/assets/12031664/6b2b7f7b-8b4a-4389-b683-dc8d83ac843c">
-<img width="50%" alt="image" src="https://github.com/rnoxy/opened-gate/assets/12031664/cbbb3d34-5d82-426d-af85-a8a3d4bff7a0">
+<table><tr><td><img width="50%" alt="image" src="https://github.com/rnoxy/opened-gate/assets/12031664/6b2b7f7b-8b4a-4389-b683-dc8d83ac843c"></td><td><img width="50%" alt="image" src="https://github.com/rnoxy/opened-gate/assets/12031664/cbbb3d34-5d82-426d-af85-a8a3d4bff7a0"></td></tr></table>
 
 ## Train the model
 The following Python script will train the model with [lightning](https://lightning.ai/) framework
