@@ -4,7 +4,6 @@ Simple CV project to check if the gate (visible from camera) is opened
 ## Train the model
 The following Python script will train the model with [lightning](https://lightning.ai/) framework
 and save it to `data/06_models/model.ckpt`.
-and save it to `data/06_models/model.ckpt`
 ```shell
 python3 src/opened_gate/train.py
 ```
