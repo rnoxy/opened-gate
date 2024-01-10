@@ -141,7 +141,7 @@ def main():
     )
 
     # Create trainer
-    trainer = lightning.Trainer(max_epochs=10, deterministic=True)
+    trainer = lightning.Trainer(max_epochs=16, deterministic=True)
 
     # Train the model
     trainer.fit(model, data)

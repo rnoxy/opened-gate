@@ -16,20 +16,15 @@ ort_session = onnxruntime.InferenceSession(MODEL_PATH)
 app = Flask(__name__)
 
 
-@app.route("/")
-def hello():
-    return "Run the /predict endpoint to get the prediction"
-
-
 # This is the endpoint that return the prediction for the latest camera image
-@app.route("/predict")
+@app.route("/")
 def predict():
-    # Download the image from http://192.168.3.10:5000/api/front/latest.jpg
-    # use urllib.request.urlretrieve to download the image
     import urllib.request
 
+    # Download the latest image
     urllib.request.urlretrieve(
-        "http://192.168.3.10:5000/api/front/latest.jpg", "latest.jpg"
+        os.getenv("OPENEDGATE_CAMERA_URL"),
+        "latest.jpg",
     )
 
     # Load the image
@@ -82,6 +77,6 @@ def predict():
 
 if __name__ == "__main__":
     app.run(
-        host=os.getenv("OPENEDGATE_HOST", "127.0.0.1"),
+        host=os.getenv("OPENEDGATE_HOST", "0.0.0.0"),
         port=int(os.getenv("OPENEDGATE_PORT", 5000)),
     )
