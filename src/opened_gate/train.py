@@ -5,6 +5,7 @@ import torchvision
 from torch.utils.data import DataLoader, random_split
 from torchvision import transforms
 from torchvision.datasets import ImageFolder
+from icecream import ic
 
 
 class ImagesDataModule(lightning.LightningDataModule):
@@ -34,6 +35,8 @@ class ImagesDataModule(lightning.LightningDataModule):
         # called on every process in DDP
         # do not assign state (self.x = y)
         dataset = ImageFolder(self.data_dir, transform=self.transform)
+
+        ic(f"Dataset size: {len(dataset)}")
 
         # Split dataset into train (80%), val (10%), test (10%)
         train_size = int(0.8 * len(dataset))
@@ -65,7 +68,11 @@ class ClassificationModule(lightning.LightningModule):
 
         # Define model
         if backbone == "resnet18":
-            self.backbone = torchvision.models.resnet18(pretrained=True)
+            from torchvision.models import ResNet18_Weights
+
+            self.backbone = torchvision.models.resnet18(
+                weights=ResNet18_Weights.IMAGENET1K_V1
+            )
             self.backbone.fc = torch.nn.Linear(512, num_classes)
         else:
             raise NotImplementedError
@@ -131,7 +138,7 @@ def main():
     lightning.seed_everything(1410)
 
     # Create data module
-    data = ImagesDataModule(data_dir="data/01_raw/camera-images", batch_size=16)
+    data = ImagesDataModule(data_dir="data/01_raw/camera-images", batch_size=32)
 
     # Create model
     model = ClassificationModule(
@@ -141,7 +148,7 @@ def main():
     )
 
     # Create trainer
-    trainer = lightning.Trainer(max_epochs=16, deterministic=True)
+    trainer = lightning.Trainer(max_epochs=7, deterministic=True)
 
     # Train the model
     trainer.fit(model, data)
