@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "opened-gate"
-version = "0.0.1"
+version = "0.0.2"
 
 dependencies = [ # main dependencies (for pip)
     "importlib-metadata >= 6.0.0",
@@ -17,10 +17,11 @@ dependencies = [ # main dependencies (for pip)
     "s3fs >= 2023.12.0",
     "dvc",
     "dvc-s3",
+    "icecream",
 ]
 
 [project.optional-dependencies] # optional dependency groups (for pip)
-dev = ["black", "flake8", "isort", "pre-commit", "pytest", "pytest-cov", "icecream"]
+dev = ["black", "flake8", "isort", "pre-commit", "pytest", "pytest-cov"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
