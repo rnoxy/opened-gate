@@ -58,8 +58,8 @@ def predict():
     softmax = np.exp(prediction) / np.sum(np.exp(prediction))
     prob = softmax[prediction_class]
 
-    # save the images with prob <= 0.8 and all images with prediction == 1
-    if prob <= 0.8 or prediction_class == 1:
+    # save the images with prob <= 0.8
+    if prob <= 0.8:
         print(f"Saving image with prob {prob}")
         timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
         filepath = f"images/{prediction_class}_{timestamp}_{prob:.2f}.jpg"
