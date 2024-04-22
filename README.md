@@ -24,7 +24,7 @@ docker build -t opened-gate .
 ## Run the app
 Run the following script to run the app.
 ```shell
-docker run --restart unless-stopped -e OPENEDGATE_CAMERA_URL=<URL> -p <PORT>:5000 opened-gate:latest
+docker run --restart unless-stopped -e OPENEDGATE_CAMERA_URL=<URL> -p <PORT>:5000 -v ./data/06_models/model.onnx:/app/model.onnx:ro opened-gate:latest
 ```
 where `<URL>` is the URL to fetch the camera image from 
 and `<PORT>` is the port on which the app will be available (e.g. `5000`).

@@ -10,7 +10,7 @@ input_sample = torch.randn(1, 3, 224, 224)
 torch.onnx.export(
     model,
     input_sample,
-    "app/model.onnx",
+    "data/06_models/model.onnx",
     export_params=True,
     opset_version=11,
     do_constant_folding=True,
