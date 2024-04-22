@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "opened-gate"
-version = "0.0.3"
+version = "0.0.4"
 
 dependencies = [ # main dependencies (for pip)
     "importlib-metadata >= 6.0.0",
