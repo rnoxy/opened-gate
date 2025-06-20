@@ -23,7 +23,7 @@
 #   - ssh: To connect to the server.
 
 DEST_LOCATION=data/01_raw/camera-images
-SSH_SERVER=192.168.1.6
+SSH_SERVER=ha
 SSH_USER=hassio
 SOURCE_LOCATION=/config/camera-images
 OPENED_IMAGES_PATTERN="opened_*.jpg"
