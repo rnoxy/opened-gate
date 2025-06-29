@@ -13,15 +13,11 @@ dependencies = [ # main dependencies (for pip)
     "torchvision",
     "omegaconf",
     "lightning",
-    "boto3",
-    "s3fs",
-    "dvc",
-    "dvc-s3",
     "icecream",
 ]
 
 [project.optional-dependencies] # optional dependency groups (for pip)
-dev = ["black", "flake8", "isort", "pre-commit", "pytest", "pytest-cov"]
+dev = ["black", "flake8", "isort", "pre-commit", "pytest", "pytest-cov", "boto3", "s3fs", "dvc[s3] >= 3.60.0"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
