@@ -1,4 +1,8 @@
 
+build:
+	@echo "Building docker image"
+	docker build -t opened-gate:latest .
+
 # Download images from ssh server
 download:
 	@echo "Downloading images from ssh server"
