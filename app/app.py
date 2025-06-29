@@ -74,24 +74,36 @@ def predict():
 
     try:
         # Load and preprocess image
-        image_raw = Image.open("latest.jpg").convert("RGB")
-        image = image_raw.resize((224, 224))
-        image = np.array(image).astype(np.float32) / 255.0
-        image = (image - np.array([0.485, 0.456, 0.406])) / np.array(
-            [0.229, 0.224, 0.225]
-        )
-        image = image.transpose(2, 0, 1)  # CHW
-        image = np.expand_dims(image, axis=0)  # NCHW
+        # Load the image
+        image_raw = Image.open("latest.jpg")
 
-        # ONNX inference
+        # Convert to numpy array
+        image = image_raw.resize((224, 224))
+        image = np.array(image)
+
+        # Normalize the image
+        # transforms.Normalize(
+        #     #             mean=[0.485, 0.456, 0.406],  # RGB
+        #     #             std=[0.229, 0.224, 0.225],  # RGB
+        #     #         ),
+        image = image / 255.0
+        image = image - np.array([0.485, 0.456, 0.406])
+        image = image / np.array([0.229, 0.224, 0.225])
+        image = image.transpose(2, 0, 1)
+        image = np.expand_dims(image, axis=0)
+        image = image.astype(np.float32)
+
+        # Make the prediction
         ort_inputs = {ort_session.get_inputs()[0].name: image}
         ort_outs = ort_session.run(None, ort_inputs)
-        predictions = ort_outs[0][0]
+        predictions = ort_outs[0]
+        prediction = predictions[0]
 
-        # Prediction and probabilities
-        prediction_class = int(np.argmax(predictions))
-        softmax = np.exp(predictions) / np.sum(np.exp(predictions))
-        prob = float(softmax[prediction_class])
+        prediction_class = np.argmax(prediction)
+
+        # calculate probability
+        softmax = np.exp(prediction) / np.sum(np.exp(prediction))
+        prob = softmax[prediction_class]
 
         # Save uncertain predictions
         if prob <= 0.8:
