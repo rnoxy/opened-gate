@@ -105,6 +105,7 @@ def predict():
         softmax = np.exp(prediction) / np.sum(np.exp(prediction))
         prob = softmax[prediction_class]
 
+
         # Save uncertain predictions
         if prob <= 0.8:
             timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
@@ -113,13 +114,15 @@ def predict():
             image_raw.save(filepath)
             logger.info(f"Saved low-confidence image to {filepath}")
 
+        # Return the prediction
         return jsonify(
             {
-                "prediction": prediction_class,
-                "probability": prob,
+                "prediction": prediction_class.tolist(),
+                "probability": softmax[prediction_class].tolist(),
                 "all_probabilities": softmax.tolist(),
             }
         )
+
     except Exception as e:
         logger.exception("Prediction failed")
         return jsonify({"error": f"Prediction failed: {e}"}), 500
