@@ -4,24 +4,20 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "opened-gate"
-version = "0.0.4"
+version = "0.0.5"
 
 dependencies = [ # main dependencies (for pip)
-    "importlib-metadata >= 6.0.0",
-    "numpy >= 1.20.0",
-    "torch >= 2.0.0",
-    "torchvision >= 0.16.0",
+    "importlib-metadata",
+    "numpy",
+    "torch",
+    "torchvision",
     "omegaconf",
     "lightning",
-    "boto3 >= 1.30.0",
-    "s3fs >= 2023.12.0",
-    "dvc",
-    "dvc-s3",
     "icecream",
 ]
 
 [project.optional-dependencies] # optional dependency groups (for pip)
-dev = ["black", "flake8", "isort", "pre-commit", "pytest", "pytest-cov"]
+dev = ["black", "flake8", "isort", "pre-commit", "pytest", "pytest-cov", "boto3", "s3fs", "dvc[s3] >= 3.60.0"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
