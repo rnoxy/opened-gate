@@ -28,3 +28,9 @@ docker run --restart unless-stopped -e OPENEDGATE_CAMERA_URL=<URL> -p <PORT>:500
 ```
 where `<URL>` is the URL to fetch the camera image from 
 and `<PORT>` is the port on which the app will be available (e.g. `5000`).
+
+# Development
+## Install dependencies
+```shell
+pip install -e ".[dev]"
+```
