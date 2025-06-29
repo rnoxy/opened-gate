@@ -105,7 +105,6 @@ def predict():
         softmax = np.exp(prediction) / np.sum(np.exp(prediction))
         prob = softmax[prediction_class]
 
-
         # Save uncertain predictions
         if prob <= 0.8:
             timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
